@@ -117,7 +117,7 @@ def request_url(soup:BeautifulSoup, url):
     try:
         total, external = 0, 0
         for tag in soup.find_all(['img', 'audio', 'embed', 'iframe']):
-            src = tag.get("src": "") #type:ignore
+            src = tag.get("src", "") #type:ignore
             if src:
                 total += 1
                 if urlparse(src).netloc and urlparse(src).netloc not in urlparse(url).netloc: #type:ignore
@@ -200,8 +200,8 @@ def domain_registration_length(url):
 
         if not creation_date or not expiration_date:
             return -1
-        registration_period = (expiration_date - creation_date).day
-        return 1 if registration_period > 356 else -1
+        registration_period = (expiration_date - creation_date).days
+        return 1 if int(registration_period) > 356 else -1
     except Exception as e:
         print(f"Whois Error: {e}")
         return -1
@@ -224,4 +224,4 @@ def features(url):
 
 if __name__ == '__main__':
     url = 'https://google.com'
-    
+    print(features(url))
