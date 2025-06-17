@@ -206,6 +206,68 @@ def domain_registration_length(url):
         print(f"Whois Error: {e}")
         return -1
 
+def redirect_feature(url):
+    try:
+        response = requests.get(url, timeout=10, allow_redirects=True)
+        if len(response.history) <= 1:
+            return 1
+        elif len(response.history) <= 4:
+            return 0
+        else:
+            return -1
+    except:
+        return -1
+    
+def on_mouse_over(soup:BeautifulSoup):
+    script_content = soup.get_text().lower()
+    return -1 if "onmouseover" in script_content else 1
+
+def right_click_disabled(soup:BeautifulSoup):
+    script_content = soup.get_text().lower()
+    if "event.button==2" in script_content:
+        return -1
+    return 1
+
+def popup_window(soup:BeautifulSoup):
+    script_content = soup.get_text().lower()
+    return -1 if "alert(" in script_content or "popup" in script_content else 1
+
+def iframe_feature(soup:BeautifulSoup):
+    iframes = soup.find_all('iframe')
+    for iframe in iframes:
+        if iframe.get('width') == "0" or iframe.get('height') == '0' or 'display:none' in iframe.get('style', ''): #type:ignore
+            return -1
+    return 1
+
+def doamin_age(url):
+    try:
+        domain = urlparse(url).netloc
+        w = whois.whois(domain)
+        creation = w.creation_date
+
+        if isinstance(creation, list):
+            creation = creation[0]
+        if not creation:
+            return -1
+        
+        age_days = (datetime.now() - creation).days
+        return 1 if age_days >= 180 else -1
+    except:
+        return -1
+    
+def dns_record_check(url):
+    try:
+        domain = urlparse(url).netloc
+        socket.gethostbyname(domain)
+        return 1
+    except:
+        return -1
+    
+def abnormal_url(soup:BeautifulSoup, url:str):
+    domain = urlparse(url).netloc
+    if soup and domain in soup.text:
+        return 1
+    return -1
 
     
 def features(url):
@@ -215,11 +277,16 @@ def features(url):
         shortening_service(url), having_at_symbol(url), 
         double_slash_redirecting(url), prefix_suffix(url), 
         sub_domain(url), ssl_state(url),
+        domain_registration_length(url),
         check_favicon(soup, url), check_port(url),
         https_token(url), request_url(soup, url),
         url_of_anchor(soup, url), links_in_tags(soup, url),
-        sfh(soup, url), domain_registration_length(url), submitting_to_email(soup)
-
+        sfh(soup, url), 
+        submitting_to_email(soup), abnormal_url(soup, url), redirect_feature(url),
+        on_mouse_over(soup), right_click_disabled(soup),
+        popup_window(soup), iframe_feature(soup),
+        doamin_age(url), dns_record_check(url),0,0,0,0
+        
     ]
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-import schemas, model
+import schemas, model, feature_extraction
 
 app = FastAPI(title='Phising API', version='1.0.0')
 
@@ -18,7 +18,8 @@ def root():
 
 @app.post('/predict')
 def predict(data:schemas.PhishingFeatures):
-    prediction = model.predict(data.features)
+    fturs = feature_extraction.features(data.url)
+    prediction = model.predict([fturs])
     label = "Phishing" if prediction == -1 else "Legitimate"
     return {"prediction":label}
 
