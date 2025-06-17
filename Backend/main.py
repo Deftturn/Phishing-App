@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-
+import schemas, model
 
 app = FastAPI(title='Phising API', version='1.0.0')
 
@@ -15,6 +15,12 @@ app.add_middleware(
 @app.get("/")
 def root():
     return {"message": "Phishing API"}
+
+@app.post('/predict')
+def predict(data:schemas.PhishingFeatures):
+    prediction = model.predict(data.features)
+    label = "Phishing" if prediction == -1 else "Legitimate"
+    return {"prediction":label}
 
 if __name__ == '__main__':
     import uvicorn
