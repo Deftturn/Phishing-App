@@ -219,7 +219,7 @@ def redirect_feature(url):
         return -1
     
 def on_mouse_over(soup:BeautifulSoup):
-    script_content = soup.get_text().lower()
+    script_content = soup.get_text().lower() if not None else ""
     return -1 if "onmouseover" in script_content else 1
 
 def right_click_disabled(soup:BeautifulSoup):
@@ -233,7 +233,7 @@ def popup_window(soup:BeautifulSoup):
     return -1 if "alert(" in script_content or "popup" in script_content else 1
 
 def iframe_feature(soup:BeautifulSoup):
-    iframes = soup.find_all('iframe')
+    iframes = soup.find_all('iframe') if not None else ""
     for iframe in iframes:
         if iframe.get('width') == "0" or iframe.get('height') == '0' or 'display:none' in iframe.get('style', ''): #type:ignore
             return -1
@@ -283,9 +283,9 @@ def features(url):
         url_of_anchor(soup, url), links_in_tags(soup, url),
         sfh(soup, url), 
         submitting_to_email(soup), abnormal_url(soup, url), redirect_feature(url),
-        on_mouse_over(soup), right_click_disabled(soup),
-        popup_window(soup), iframe_feature(soup),
-        doamin_age(url), dns_record_check(url),0,0,0,0
+        0, 0,
+        0, 0,
+        doamin_age(url), dns_record_check(url),0,0,0,0,0
         
     ]
 

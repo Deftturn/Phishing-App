@@ -17,12 +17,12 @@ def root():
     return {"message": "Phishing API"}
 
 @app.post('/predict')
-def predict(data:schemas.PhishingFeatures):
+async def predict(data:schemas.PhishingFeatures):
     fturs = feature_extraction.features(data.url)
-    prediction = model.predict([fturs])
+    prediction = model.predict(fturs)
     label = "Phishing" if prediction == -1 else "Legitimate"
     return {"prediction":label}
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run('main:app', host='localhost', port=3214)
+    uvicorn.run('main:app', host='localhost', port=3214, reload=True)
