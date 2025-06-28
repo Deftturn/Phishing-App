@@ -284,8 +284,8 @@ def features(url):
         sfh(soup, url), 
         submitting_to_email(soup), abnormal_url(soup, url), redirect_feature(url),
         0, 0,
-        0, 0,
-        doamin_age(url), dns_record_check(url),0,0,0,0,0
+        -1, -1,
+        doamin_age(url), dns_record_check(url),-1,-1,-1,0,0
         
     ]
 
