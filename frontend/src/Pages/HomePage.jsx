@@ -2,6 +2,7 @@ import Search from "../Component/Search";
 // import Card from "../Component/Card";
 import { postURL } from "../api";
 import { useState } from "react";
+import Chart from "../Component/Chart";
 
 function HomePage() {
 
@@ -37,9 +38,9 @@ function HomePage() {
 
 
     return (
-        <div className="container mt-5">
-            <h2> Which URL Do You Have In Mind 🤔 ?</h2>
-            <div className="card p-3 m-3 border-0">
+        <div className="container mt-5 ">
+            <h2 className="text-light"> Which URL Do You Have In Mind 🤔 ?</h2>
+            <div className="card p-3 m-3 border-0 bg-back">
                 <div className="card-body">
                     <Search value={input.url} onChange={handleChange} onSubmit={handleSubmit}/>
                 </div>
@@ -48,6 +49,10 @@ function HomePage() {
                         {output.url === -1 ? <p className="p-4 rounded bg-danger">Prediction: Phishing URL</p> : <p className="p-4 rounded bg-success text-light">Prediction: Legitimate</p>}
                     </div>
                 )}
+
+                <div className="d-flex justify-content-center">
+                    <Chart/>
+                </div>
             </div>
         </div>
     )
