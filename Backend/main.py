@@ -16,9 +16,9 @@ app.add_middleware(
 )
 
 models = {
-    "Random Forest": joblib.load("Backend/model/random_forest_model.pkl"),
-    "Naive Bayes": joblib.load("Backend/model/naive_bayes_model.pkl"),
-    "SVM": joblib.load("Backend/model/svm_model.pkl")
+    "Random Forest": joblib.load("model/random_forest_model.pkl"),
+    "Naive Bayes": joblib.load("model/naive_bayes_model.pkl"),
+    "SVM": joblib.load("model/svm_model.pkl")
 }
 
 @app.get("/")
