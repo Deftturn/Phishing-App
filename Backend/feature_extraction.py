@@ -283,12 +283,12 @@ def features(url):
         url_of_anchor(soup, url), links_in_tags(soup, url),
         sfh(soup, url), 
         submitting_to_email(soup), abnormal_url(soup, url), redirect_feature(url),
-        0, 0,
         -1, -1,
-        doamin_age(url), dns_record_check(url),0,0,0,0,0
+        -1, -1,
+        doamin_age(url), dns_record_check(url),0,0,0,0,-1
         
     ]
 
 if __name__ == '__main__':
-    url = 'https://google.com'
+    url = 'http:////google.com'
     print(features(url))

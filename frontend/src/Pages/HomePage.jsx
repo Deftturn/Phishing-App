@@ -12,7 +12,7 @@ function HomePage() {
     // }
 
     const [input, setInput] = useState({url:''})
-    const [output, setOutput] = useState({url:''})
+    const [output, setOutput] = useState({predictions:''})
     const [hasSubmitted, sethasSubmitted] = useState(false)
 
     const handleChange = (e) => {
@@ -26,7 +26,7 @@ function HomePage() {
         try{
             const res = postURL(input)
             
-            setOutput({...output, url : (await res).data.prediction})
+            setOutput({...output, predictions : (await res).data.predictions})
             sethasSubmitted(true)
             console.log((await res).data)
         }catch (e) {
@@ -45,8 +45,8 @@ function HomePage() {
                     <Search value={input.url} onChange={handleChange} onSubmit={handleSubmit}/>
                 </div>
                 {hasSubmitted && output && (
-                    <div className="card mt-4 p-2 border-0">
-                        {output.url === -1 ? <p className="p-4 rounded bg-danger">Prediction: Phishing URL</p> : <p className="p-4 rounded bg-success text-light">Prediction: Legitimate</p>}
+                    <div className="mt-4 p-2 border-0">
+                        {output.predictions === '-1' ? <p className="p-4 rounded bg-danger">Prediction: Phishing URL</p> : <p className="p-4 rounded bg-success text-light">Prediction: Legitimate</p>}
                     </div>
                 )}
 

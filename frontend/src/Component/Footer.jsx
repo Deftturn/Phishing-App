@@ -3,21 +3,21 @@ import React from "react";
 
 const Footer = () => {
     return (
-        <div class="card text-center bg-dark text-light">
-            <div class="card-header">
-                Featured
+        <div className="card text-center bg-dark text-light">
+            <div className="card-header">
+                &copy;Defturn (2025)
 
 
             </div>
-            <div class="card-footer text-body-primary d-flex justify-content-center">
+            <div className="card-footer text-body-primary d-flex justify-content-center">
                <div className="mx-2">
-                <i class="bi bi-twitter-x"></i>
+                <i className="bi bi-twitter-x"></i>
                </div>
                <div className="mx-2">
-                <i class="bi bi-github"></i>
+                <i className="bi bi-github"></i>
                </div>
                <div className="mx-2">
-               <i class="bi bi-instagram"></i>
+               <i className="bi bi-instagram"></i>
                </div>
                
                
